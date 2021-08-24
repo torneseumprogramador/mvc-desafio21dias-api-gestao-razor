@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado;
+using mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado.Services;
+using web_renderizacao_server_side.Models;
 
 namespace web_renderizacao_server_side
 {
@@ -24,6 +27,12 @@ namespace web_renderizacao_server_side
         public void ConfigureServices(IServiceCollection services)
         {
             Program.AdministradoresAPI = Configuration.GetConnectionString("AdministradoresAPI");
+            Program.AlunosAPI = Configuration.GetConnectionString("AlunosApi");
+            Program.MateriaisAPI = Configuration.GetConnectionString("MateriaisAPI");
+            Program.MateriaisAPI = Configuration.GetConnectionString("PaisAPI");
+
+            services.AddScoped<IHttpClientService<Material>, MaterialHttpClientService>();
+            
             services.AddControllersWithViews();
         }
 
