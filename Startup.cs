@@ -30,7 +30,7 @@ namespace web_renderizacao_server_side
             Program.AdministradoresAPI = Configuration.GetConnectionString("AdministradoresAPI");
             Program.AlunosAPI = Configuration.GetConnectionString("AlunosApi");
             Program.MateriaisAPI = Configuration.GetConnectionString("MateriaisAPI");
-            Program.MateriaisAPI = Configuration.GetConnectionString("PaisAPI");
+            Program.PaisAPI = Configuration.GetConnectionString("PaisAPI");
 
             services.AddScoped<IMaterialHttpClientService, MaterialHttpClientService>();
             
