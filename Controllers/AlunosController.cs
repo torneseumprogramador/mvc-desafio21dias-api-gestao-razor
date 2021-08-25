@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using mvc_desafio21dias_api_gestao_razor.Servico;
+using web_renderizacao_server_side.Helpers;
 using web_renderizacao_server_side.Models;
 
 namespace mvc_desafio21dias_api_gestao_razor.Controllers
 {
+    [Logado]
     public class AlunosController : Controller
     {
         public async Task<IActionResult> Index(int pagina = 1)

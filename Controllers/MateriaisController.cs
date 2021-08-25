@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using mvc_desafio21dias_api_gestao_razor.Servico;
 using web_renderizacao_server_side.Models;
-using mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado;
 using mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado.Interfaces;
+using web_renderizacao_server_side.Helpers;
 
 namespace mvc_desafio21dias_api_gestao_razor.Controllers
 {
+    [Logado]
     public class MateriaisController : Controller
     {
         private readonly IMaterialHttpClientService _servico;

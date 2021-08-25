@@ -77,7 +77,7 @@
                 <span class="profile-ava">
                     <img alt="" src="/img/avatar1_small.jpg">
                 </span>
-                <span class="username">Vai entrar o usuário logado</span>
+                <span class="username">@TempData["usuarioLogado"]</span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
@@ -86,7 +86,7 @@
                 <a href="/administradores/1/editar"><i class="icon_profile"></i> Editar perfil</a>
               </li>
               <li>
-                <a href="/sair"><i class="icon_key_alt"></i> Sair</a>
+                <a href="/login/sair"><i class="icon_key_alt"></i> Sair</a>
               </li>
             </ul>
           </li>
@@ -116,7 +116,7 @@
             </a>
             <ul class="sub">
               <li><a href="/administradores"><i class="icon_table"></i>Administradores</a></li>
-              <li><a href="/sair"><i class="icon_key_alt"></i>Sair</a></li>
+              <li><a href="/login/sair"><i class="icon_key_alt"></i>Sair</a></li>
             </ul>
             <li><a href="/alunos"><i class="icon_table"></i>Alunos</a></li>
             <li><a href="/materiais"><i class="icon_table"></i>Materia</a></li>

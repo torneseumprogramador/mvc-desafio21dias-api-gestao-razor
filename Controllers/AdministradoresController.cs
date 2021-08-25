@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using web_renderizacao_server_side.Helpers;
 using web_renderizacao_server_side.Models;
 using web_renderizacao_server_side.Servicos;
 
 namespace web_renderizacao_server_side.Controllers
 {
+    [Logado]
     public class AdministradoresController : Controller
     {
         // GET: Administradores

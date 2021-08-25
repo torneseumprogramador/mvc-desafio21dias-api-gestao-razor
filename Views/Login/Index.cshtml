@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Login da aplicação";
+    Layout = "_LayoutLogin";
+}
+
+<form class="login-form" method="POST" action="/login/logar">
+    <div class="login-wrap">
+        <p class="login-img"><i class="icon_lock_alt"></i></p>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="icon_profile"></i></span>
+            <input type="text" class="form-control" name="email" placeholder="Digite o seu email" autofocus>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+            <input type="password" name="senha" class="form-control" placeholder="Digite a sua senha">
+        </div>
+        <label class="checkbox">
+            <input type="checkbox" name="lembrar" value="remember-me"> Lembrar de mim
+        </label>
+        @if(!string.IsNullOrEmpty(ViewBag.erro)){
+            <div class="alert alert-danger" style="margin: 10px" role="alert">
+                @ViewBag.erro
+            </div>
+        }
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+    </div>
+</form>

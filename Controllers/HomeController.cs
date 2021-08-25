@@ -5,10 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using web_renderizacao_server_side.Models;
+using web_renderizacao_server_side.Helpers;
 
 namespace web_renderizacao_server_side.Controllers
 {
+    [Logado]
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using mvc_desafio21dias_api_gestao_razor.Servico;
 using web_renderizacao_server_side.Models;
+using web_renderizacao_server_side.Helpers;
 
 namespace mvc_desafio21dias_api_gestao_razor.Controllers
 {
+    [Logado]
     public class PaisController : Controller
     {
         public async Task<IActionResult> Index(int pagina = 1)
