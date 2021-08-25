@@ -1,0 +1,51 @@
+@model web_renderizacao_server_side.Models.Paginacao<Pai>
+
+@{
+    ViewData["Title"] = "Lista de administradores";
+}
+
+<h1>Lista de administradores</h1>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Novo</a>
+</p>
+
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <table class="table table-striped table-advance table-hover">
+        <tbody>
+          <tr>
+            <th><i class="icon_profile"></i> Id</th>
+            <th><i class="icon_calendar"></i> Nome</th>
+            <th><i class="icon_mail_alt"></i> AlunoId</th>
+            <th><i class="icon_cogs"></i> Ações</th>
+          </tr>
+          @foreach (var admin in Model.Results) {
+          <tr>
+            <td>@admin.Id</td>
+            <td>@admin.Nome</td>
+            <td>@admin.AlunoId</td>
+            <td>
+              <div class="btn-group">
+                <a class="btn btn-success"asp-action="Details" asp-route-id="@admin.Id"><i class="icon_check_alt2"></i></a>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@admin.Id"><i class="icon_plus_alt2"></i></a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@admin.Id"><i class="icon_close_alt2"></i></a>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+
+      <hr>
+      
+      @if(Model.CurrentPage > 1){
+        <a href="/Pais?pagina=@(Model.CurrentPage - 1)">Anterior</a>
+      }
+
+      @if(Model.PageCount > Model.CurrentPage && Model.PageSize == Model.Results.Count){
+        <a href="/Pais?pagina=@(Model.CurrentPage + 1)">Próxima</a>
+      }
+    </section>
+  </div>
+</div>
