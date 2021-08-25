@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using mvc_desafio21dias_api_gestao_razor.Servico;
 using web_renderizacao_server_side.Models;
 using mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado;
+using mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado.Interfaces;
 
 namespace mvc_desafio21dias_api_gestao_razor.Controllers
 {
     public class MateriaisController : Controller
     {
-        private readonly IHttpClientService<Material> _servico;
-        public MateriaisController(IHttpClientService<Material> service)
+        private readonly IMaterialHttpClientService _servico;
+        public MateriaisController(IMaterialHttpClientService service)
         {
             _servico = service;
         }

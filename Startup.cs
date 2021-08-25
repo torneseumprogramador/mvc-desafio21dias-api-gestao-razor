@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado;
+using mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado.Interfaces;
 using mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado.Services;
 using web_renderizacao_server_side.Models;
 
@@ -31,7 +32,7 @@ namespace web_renderizacao_server_side
             Program.MateriaisAPI = Configuration.GetConnectionString("MateriaisAPI");
             Program.MateriaisAPI = Configuration.GetConnectionString("PaisAPI");
 
-            services.AddScoped<IHttpClientService<Material>, MaterialHttpClientService>();
+            services.AddScoped<IMaterialHttpClientService, MaterialHttpClientService>();
             
             services.AddControllersWithViews();
         }
