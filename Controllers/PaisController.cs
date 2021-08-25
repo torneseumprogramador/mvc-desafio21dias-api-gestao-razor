@@ -10,7 +10,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
     {
         public async Task<IActionResult> Index(int pagina = 1)
         {
-            return View(await PaiServico.TodosPaginado(pagina));
+            return View(await PaiServico.Todos(pagina));
         }
 
         // GET: Alunos/Details/5
@@ -58,7 +58,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, Pai pai)
         {
-            if (Convert.ToInt32(id) != pai.Id)
+            if (id != pai.Id)
             {
                 return NotFound();
             }

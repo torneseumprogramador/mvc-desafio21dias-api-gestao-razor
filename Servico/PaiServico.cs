@@ -11,20 +11,16 @@ namespace mvc_desafio21dias_api_gestao_razor.Servico
 {
     public class PaiServico
     {
-         public static async Task<List<Pai>> Todos(int pagina = 1)
-        {
-            return (await TodosPaginado(pagina)).Results;
-        }
-        public static async Task<Paginacao<Pai>> TodosPaginado(int pagina = 1)
+        public static async Task<List<Pai>> Todos(int pagina = 1)
         {
             using (var http = new HttpClient())
             {
                 using (var response = await http.GetAsync($"{Program.PaisAPI}/pais?page={pagina}"))
                 {
-                    if(!response.IsSuccessStatusCode) return new Paginacao<Pai>();
+                    if(!response.IsSuccessStatusCode) return new List<Pai>();
 
                     string json = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Paginacao<Pai>>(json);
+                    return JsonConvert.DeserializeObject<List<Pai>>(json);
                 }
             }
         }

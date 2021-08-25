@@ -1,4 +1,4 @@
-@model web_renderizacao_server_side.Models.Paginacao<Pai>
+@model List<Pai>
 
 @{
     ViewData["Title"] = "Lista de administradores";
@@ -20,7 +20,7 @@
             <th><i class="icon_mail_alt"></i> AlunoId</th>
             <th><i class="icon_cogs"></i> Ações</th>
           </tr>
-          @foreach (var admin in Model.Results) {
+          @foreach (var admin in Model) {
           <tr>
             <td>@admin.Id</td>
             <td>@admin.Nome</td>
@@ -36,16 +36,6 @@
           }
         </tbody>
       </table>
-
-      <hr>
-      
-      @if(Model.CurrentPage > 1){
-        <a href="/Pais?pagina=@(Model.CurrentPage - 1)">Anterior</a>
-      }
-
-      @if(Model.PageCount > Model.CurrentPage && Model.PageSize == Model.Results.Count){
-        <a href="/Pais?pagina=@(Model.CurrentPage + 1)">Próxima</a>
-      }
     </section>
   </div>
 </div>
