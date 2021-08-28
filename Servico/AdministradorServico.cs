@@ -20,6 +20,9 @@ namespace web_renderizacao_server_side.Servicos
         {
             using (var http = new HttpClient())
             {
+                // TODO
+                //http.DefaultRequestHeaders.Add("Authorization", PegarViaCookie.get());
+
                 using (var response = await http.GetAsync($"{Program.AdministradoresAPI}/administradores?page={pagina}"))
                 {
                     if(!response.IsSuccessStatusCode) return new Paginacao<Administrador>();
