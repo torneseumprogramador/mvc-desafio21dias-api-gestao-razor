@@ -37,6 +37,12 @@ namespace web_renderizacao_server_side.Controllers
                         HttpOnly = true,
                     });
 
+                    this.HttpContext.Response.Cookies.Append("adm_desafio_21dias_csharp_api_token", adm.Token.ToString(), new CookieOptions
+                    {
+                        Expires = expira,
+                        HttpOnly = true,
+                    });
+
                     this.HttpContext.Response.Cookies.Append("adm_desafio_21dias_csharp_api_nome", adm.Nome.ToString(), new CookieOptions
                     {
                         Expires = expira,

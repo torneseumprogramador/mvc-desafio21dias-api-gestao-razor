@@ -12,13 +12,13 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
     {
         public async Task<IActionResult> Index(int pagina = 1)
         {
-            return View(await PaiServico.Todos(pagina));
+            return View(await PaiServico.Todos(pagina, TempData["token"].ToString()));
         }
 
         // GET: Alunos/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var pai = await PaiServico.BuscaPorId(id);
+            var pai = await PaiServico.BuscaPorId(id, TempData["token"].ToString());
             if (pai == null)
             {
                 return NotFound();
@@ -39,7 +39,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         {
             if (ModelState.IsValid)
             {
-                var p = await PaiServico.Salvar(pai);
+                var p = await PaiServico.Salvar(pai, TempData["token"].ToString());
                 return Redirect($"/Pais/Details/{p.Id}");
             }
             return View(pai);
@@ -48,7 +48,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         // GET: Alunos/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var pai = await PaiServico.BuscaPorId(id);
+            var pai = await PaiServico.BuscaPorId(id, TempData["token"].ToString());
             if (pai == null)
             {
                 return NotFound();
@@ -67,7 +67,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
 
             if (ModelState.IsValid)
             {
-                await PaiServico.Salvar(pai);
+                await PaiServico.Salvar(pai, TempData["token"].ToString());
                 return RedirectToAction(nameof(Index));
             }
             return View(pai);
@@ -76,7 +76,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         // GET: Alunos/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var pai = await PaiServico.BuscaPorId(id);
+            var pai = await PaiServico.BuscaPorId(id, TempData["token"].ToString());
             if (pai == null)
             {
                 return NotFound();
@@ -90,7 +90,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await PaiServico.ExcluirPorId(id);
+            await PaiServico.ExcluirPorId(id, TempData["token"].ToString());
             return RedirectToAction(nameof(Index));
         }
     }

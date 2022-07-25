@@ -22,6 +22,12 @@ namespace web_renderizacao_server_side.Helpers
          ((Controller)filterContext.Controller).TempData["usuarioLogado"] = usuarioLogado;
       }
 
+      if (filterContext.Controller != null)
+      {
+         string token = filterContext.HttpContext.Request.Cookies["adm_desafio_21dias_csharp_api_token"];
+         ((Controller)filterContext.Controller).TempData["token"] = token;
+      }
+
       base.OnActionExecuting(filterContext);
     }
   }

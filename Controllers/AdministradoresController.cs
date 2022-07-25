@@ -16,13 +16,13 @@ namespace web_renderizacao_server_side.Controllers
         // GET: Administradores
         public async Task<IActionResult> Index(int pagina = 1)
         {
-            return View(await AdministradorServico.TodosPaginado(pagina));
+            return View(await AdministradorServico.TodosPaginado(pagina, TempData["token"].ToString()));
         }
 
         // GET: Administradores/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var administrador = await AdministradorServico.BuscaPorId(id);
+            var administrador = await AdministradorServico.BuscaPorId(id, TempData["token"].ToString());
             if (administrador == null)
             {
                 return NotFound();
@@ -43,7 +43,7 @@ namespace web_renderizacao_server_side.Controllers
         {
             if (ModelState.IsValid)
             {
-                var adm = await AdministradorServico.Salvar(administrador);
+                var adm = await AdministradorServico.Salvar(administrador, TempData["token"].ToString());
                 return Redirect($"/Administradores/Details/{adm.Id}");
             }
             return View(administrador);
@@ -52,7 +52,7 @@ namespace web_renderizacao_server_side.Controllers
         // GET: Administradores/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var administrador = await AdministradorServico.BuscaPorId(id);
+            var administrador = await AdministradorServico.BuscaPorId(id, TempData["token"].ToString());
             if (administrador == null)
             {
                 return NotFound();
@@ -71,7 +71,7 @@ namespace web_renderizacao_server_side.Controllers
 
             if (ModelState.IsValid)
             {
-                await AdministradorServico.Salvar(administrador);
+                await AdministradorServico.Salvar(administrador, TempData["token"].ToString());
                 return RedirectToAction(nameof(Index));
             }
             return View(administrador);
@@ -80,7 +80,7 @@ namespace web_renderizacao_server_side.Controllers
         // GET: Administradores/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var administrador = await AdministradorServico.BuscaPorId(id);
+            var administrador = await AdministradorServico.BuscaPorId(id, TempData["token"].ToString());
             if (administrador == null)
             {
                 return NotFound();
@@ -94,7 +94,7 @@ namespace web_renderizacao_server_side.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await AdministradorServico.ExcluirPorId(id);
+            await AdministradorServico.ExcluirPorId(id, TempData["token"].ToString());
             return RedirectToAction(nameof(Index));
         }
     }

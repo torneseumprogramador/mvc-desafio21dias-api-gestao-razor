@@ -12,5 +12,7 @@ namespace web_renderizacao_server_side.Models
         public string Email { get; set; }
         [Required]
         public string Senha { get; set; }
+
+        public string Token { get; set; }
     }
 }

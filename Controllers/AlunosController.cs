@@ -11,13 +11,13 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
     {
         public async Task<IActionResult> Index(int pagina = 1)
         {
-            return View(await AlunoServico.TodosPaginado(pagina));
+            return View(await AlunoServico.TodosPaginado(pagina, TempData["token"].ToString()));
         }
 
         // GET: Alunos/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var aluno = await AlunoServico.BuscaPorId(id);
+            var aluno = await AlunoServico.BuscaPorId(id, TempData["token"].ToString());
             if (aluno == null)
             {
                 return NotFound();
@@ -38,7 +38,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         {
             if (ModelState.IsValid)
             {
-                var alun = await AlunoServico.Salvar(aluno);
+                var alun = await AlunoServico.Salvar(aluno, TempData["token"].ToString());
                 return Redirect($"/Alunos/Details/{alun.Id}");
             }
             return View(aluno);
@@ -47,7 +47,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         // GET: Alunos/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var aluno = await AlunoServico.BuscaPorId(id);
+            var aluno = await AlunoServico.BuscaPorId(id, TempData["token"].ToString());
             if (aluno == null)
             {
                 return NotFound();
@@ -66,7 +66,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
 
             if (ModelState.IsValid)
             {
-                await AlunoServico.Salvar(aluno);
+                await AlunoServico.Salvar(aluno, TempData["token"].ToString());
                 return RedirectToAction(nameof(Index));
             }
             return View(aluno);
@@ -75,7 +75,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         // GET: Alunos/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var aluno = await AlunoServico.BuscaPorId(id);
+            var aluno = await AlunoServico.BuscaPorId(id, TempData["token"].ToString());
             if (aluno == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await AlunoServico.ExcluirPorId(id);
+            await AlunoServico.ExcluirPorId(id, TempData["token"].ToString());
             return RedirectToAction(nameof(Index));
         }
     }
