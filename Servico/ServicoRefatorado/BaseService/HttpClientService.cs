@@ -7,6 +7,7 @@ using System;
 using System.Net.Http.Json;
 using mvc_desafio21dias_api_gestao_razor.Models;
 using Microsoft.Extensions.Configuration;
+using System.Net.Http.Headers;
 
 namespace mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado
 {
@@ -21,11 +22,12 @@ namespace mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado
             _urlServico = configuration.GetConnectionString(urlServico);
         }
 
-        public async Task<T> BuscaPorId(int id)
+        public async Task<T> BuscaPorId(int id, string token)
         {
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             using (var response = await _http.GetAsync($"{_urlServico}/{id}"))
             {
-                if(!response.IsSuccessStatusCode) return null;
+                if (!response.IsSuccessStatusCode) return null;
                 return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
             }
         }
@@ -35,57 +37,67 @@ namespace mvc_desafio21dias_api_gestao_razor.Servico.ServicoRefatorado
             _http?.Dispose();
         }
 
-        public async Task ExcluirPorId(int id)
+        public async Task ExcluirPorId(int id, string token)
         {
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             using (var response = await _http.DeleteAsync($"{_urlServico}/{id}"))
             {
-                if(!response.IsSuccessStatusCode) throw new Exception("Erro ao excluir da API");
+                if (!response.IsSuccessStatusCode) throw new Exception("Erro ao excluir da API");
             }
         }
 
-        public async Task<T> Salvar(T entidade)
+        public async Task<T> Salvar(T entidade, string token)
         {
-            if(entidade.Id == 0)
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            if (entidade.Id == 0)
+            {
+                using (var response = await _http.PostAsJsonAsync($"{_urlServico}", entidade))
                 {
-                    using (var response = await _http.PostAsJsonAsync($"{_urlServico}", entidade))
+                    string retorno = await response.Content.ReadAsStringAsync();
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("========================");
+                        Console.WriteLine(retorno);
+                        Console.WriteLine("========================");
+                        throw new Exception("Erro ao incluir na API");
+                    }
+                    return JsonConvert.DeserializeObject<T>(retorno);
+                }
+            }
+            else
+            {
+                using (var response = await _http.PutAsJsonAsync($"{_urlServico}/{entidade.Id}", entidade))
+                {
+                    if(!response.IsSuccessStatusCode)
                     {
                         string retorno = await response.Content.ReadAsStringAsync();
-                        if(!response.IsSuccessStatusCode)
-                        {
-                            Console.WriteLine("========================");
-                            Console.WriteLine(retorno);
-                            Console.WriteLine("========================");
-                            throw new Exception("Erro ao incluir na API");
-                        }
-                        return JsonConvert.DeserializeObject<T>(retorno);
+                        Console.WriteLine("=====[" + token + "]=====");
+                        Console.WriteLine("=====[" + response.StatusCode + "]=====");
+                        Console.WriteLine("=====[" + retorno + "]=====");
+                        throw new Exception("Erro ao atualizar na API");
                     }
+                    
+                    return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
                 }
-                else
-                {
-                    using (var response = await _http.PutAsJsonAsync($"{_urlServico}/{entidade.Id}", entidade))
-                    {
-                        if(!response.IsSuccessStatusCode) throw new Exception("Erro ao atualizar na API");
-                        return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
-                    }
-                }
+            }
         }
 
-        public virtual async Task<List<T>> Todos(int pagina = 1)
+        public virtual async Task<List<T>> Todos(int pagina = 1, string token = "")
         {
-            return (await TodosPaginado(pagina)).Results;
+            return (await TodosPaginado(pagina, token)).Results;
         }
 
-        public virtual async Task<Paginacao<T>> TodosPaginado(int pagina = 1)
+        public virtual async Task<Paginacao<T>> TodosPaginado(int pagina = 1, string token = "")
         {
-            
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             using (var response = await _http.GetAsync($"{_urlServico}?page={pagina}"))
             {
-                if(!response.IsSuccessStatusCode) return new Paginacao<T>();
+                if (!response.IsSuccessStatusCode) return new Paginacao<T>();
 
                 string json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<Paginacao<T>>(json);
             }
-            
+
         }
     }
 }

@@ -68,7 +68,12 @@ namespace mvc_desafio21dias_api_gestao_razor.Servico
                 {
                     using (var response = await http.PutAsJsonAsync($"{Program.MateriaisAPI}/materiais/{material.Id}", material))
                     {
-                        if(!response.IsSuccessStatusCode) throw new Exception("Erro ao atualizar na API");
+                        if(!response.IsSuccessStatusCode)
+                        {
+                            Console.WriteLine("=====[" + response.StatusCode + "]=====");
+                            Console.WriteLine("=====[" + response.Content + "]=====");
+                            throw new Exception("Erro ao atualizar na API");
+                        }
                         return JsonConvert.DeserializeObject<Material>(await response.Content.ReadAsStringAsync());
                     }
                 }

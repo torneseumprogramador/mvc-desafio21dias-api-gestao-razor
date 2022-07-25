@@ -16,13 +16,13 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         }
         public async Task<IActionResult> Index(int pagina = 1)
         {
-            return View(await _servico.TodosPaginado(pagina));
+            return View(await _servico.TodosPaginado(pagina, TempData["token"].ToString()));
         }
 
         // GET: Alunos/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var material = await _servico.BuscaPorId(id);
+            var material = await _servico.BuscaPorId(id, TempData["token"].ToString());
             if (material == null)
             {
                 return NotFound();
@@ -43,7 +43,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         {
             if (ModelState.IsValid)
             {
-                var mat = await _servico.Salvar(material);
+                var mat = await _servico.Salvar(material, TempData["token"].ToString());
                 return Redirect($"/Materiais/Details/{mat.Id}");
             }
             return View(material);
@@ -52,7 +52,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         // GET: Alunos/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var material = await _servico.BuscaPorId(id);
+            var material = await _servico.BuscaPorId(id, TempData["token"].ToString());
             if (material == null)
             {
                 return NotFound();
@@ -71,7 +71,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
 
             if (ModelState.IsValid)
             {
-                await _servico.Salvar(material);
+                await _servico.Salvar(material, TempData["token"].ToString());
                 return RedirectToAction(nameof(Index));
             }
             return View(material);
@@ -80,7 +80,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         // GET: Alunos/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var material = await _servico.BuscaPorId(id);
+            var material = await _servico.BuscaPorId(id, TempData["token"].ToString());
             if (material == null)
             {
                 return NotFound();
@@ -94,7 +94,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _servico.ExcluirPorId(id);
+            await _servico.ExcluirPorId(id, TempData["token"].ToString());
             return RedirectToAction(nameof(Index));
         }
     }
