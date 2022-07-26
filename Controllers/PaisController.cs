@@ -40,7 +40,7 @@ namespace mvc_desafio21dias_api_gestao_razor.Controllers
             if (ModelState.IsValid)
             {
                 var p = await PaiServico.Salvar(pai, TempData["token"].ToString());
-                return Redirect($"/Pais/Details/{p.Id}");
+                return Redirect($"/Pais");
             }
             return View(pai);
         }
